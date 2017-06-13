@@ -1,0 +1,9 @@
+[submodule "graphicsLibraries/glfw"]
+	path = graphicsLibraries/glfw
+	url = https://github.com/glfw/glfw.git
+[submodule "graphicsLibraries/SDL2"]
+	path = graphicsLibraries/SDL2
+	url = https://github.com/davidsiaw/SDL2.git
+[submodule "graphicsLibraries/SFML"]
+	path = graphicsLibraries/SFML
+	url = https://github.com/SFML/SFML.git
