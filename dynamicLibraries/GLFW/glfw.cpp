@@ -4,22 +4,21 @@
 
 
 #include "glfw.hpp"
-
-gameControl::gameControl(int windowWidth ,int windowHeight) {
+gameControl::gameControl(int windowWidth, int windowHeight) {
 	this->widowHeight = windowHeight;
 	this->widowWidth = windowWidth;
 	glfwInit();
 	std::cout << "glfw Constructed" << std::endl;
 	createWindow();
-	glfwSetKeyCallback(window, keyHooks);
+	glfwSetKeyCallback(window, (GLFWkeyfun) keyHooks);
 	updateWindow();
 }
 
 void gameControl::createWindow() {
 	this->window = glfwCreateWindow(this->widowWidth, this->widowHeight, "GLFW WINDOW", NULL, NULL);
-	if(!window) {
+	if (!window) {
 		std::cout << "ERROR : Window Failed" << std::endl;
-		delete(this);
+		delete (this);
 	}
 	glfwMakeContextCurrent(window);
 }
@@ -31,8 +30,7 @@ gameControl::~gameControl() {
 
 void gameControl::updateWindow() {
 
-	while (!glfwWindowShouldClose(window))
-	{
+	while (!glfwWindowShouldClose(window)) {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		glfwSwapBuffers(window);
@@ -45,4 +43,8 @@ void gameControl::updateWindow() {
 void gameControl::keyHooks(GLFWwindow *window, int key, int action) {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+extern "C" gameControl* create() {
+	return new gameControl(700, 480);
 }

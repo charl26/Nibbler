@@ -21,4 +21,6 @@ public:
 	virtual ~gameControl();
 };
 
+typedef gameControl* create_t();
+
 #endif //NIBBLER_GLFW_HPP

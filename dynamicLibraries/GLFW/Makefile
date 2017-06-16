@@ -1,8 +1,23 @@
+NAME		=	dynamicLibGLFW.so
+SRC			=	glfw.cpp
+OBJ         =   $(SRCS:.cpp=.o)
 
+CC          =   g++
+CPPFLAGS    =   -fPIC -c -Wall -Wextra
+LDFLAGS     =   -shared -o
+RM          =   rm -rf
+GLFW        =   ../../graphicsLibraries/glfw/src/libglfw3.a
 
-SRC = glfw.cpp
+all: $(NAME)
 
-LIB = ../../graphicsLibraries/glfw/src/libglfw3.a
+$(NAME): $(OBJ)
+	$(CC) $(SRC) -undefined dynamic_lookup $(GLFW) ${LDFLAGS} $(NAME)
 
-FRAMEWORKS = -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
-g++ *.cpp
+clean:
+	$(RM) glfw.o
+
+fclean: clean
+	$(RM) $(NAME)
+
+re: fclean
+	$(MAKE) all
