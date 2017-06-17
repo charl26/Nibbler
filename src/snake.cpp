@@ -5,9 +5,9 @@
 #include "snake.hpp"
 
 Snake::Snake(const std::vector<int> &position, bool isHead) : position(position), isHead(isHead) {
-	std::cout << "Constructor Called" << std::endl;
+	std::cout << "Snake Constructor Called" << std::endl;
 }
 
 Snake::~Snake() {
-	std::cout << "Destructor Called" << std::endl;
+	std::cout << "Snake Destructor Called" << std::endl;
 }

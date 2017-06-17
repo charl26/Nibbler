@@ -1,5 +1,22 @@
 #include "CoreGame.hpp"
+#include "snake.hpp"
 
+int windowWidth;
+int windowHeight;
+std::list<Snake*> player;
+
+void addSnakeSegment(const std::vector<int> position) {
+	Snake *snakeSegment = new Snake(position, false);
+	player.push_back(snakeSegment);
+}
+
+void genStartingSnake(const std::vector<int> &start) {
+	Snake *snakeHead = new Snake(start, true);
+	player.push_back(snakeHead);
+	while (player.size() < 5) {
+		addSnakeSegment(start);
+	}
+}
 
 void startGame() {
 	std::cout << "Please Enter Starting GUI"
@@ -9,6 +26,8 @@ void startGame() {
 	          << std::endl;
 	int GUI;
 	std::cin >> std::ws >> GUI;
+	std::vector<int> start = {windowHeight /2, windowWidth/2};
+	genStartingSnake(start);
 	switch (GUI) {
 		case 1: {
 			std::cout << "Starting GUI SDL" << std::endl;
@@ -32,10 +51,11 @@ void startGame() {
 	}
 }
 
+
 int main(int argc, char **argv) {
 	if (argc == 3) {
-		int windowWidth = std::atoi(argv[1]);
-		int windowHeight = std::atoi(argv[2]);
+		windowWidth = std::atoi(argv[1]);
+		windowHeight = std::atoi(argv[2]);
 		if (0 != windowWidth || 0 != windowHeight) {
 			if (windowWidth >= MinWindow && windowWidth <= MaxWindow){
 				if (windowHeight >= MinWindow && windowHeight <= MaxWindow) {
