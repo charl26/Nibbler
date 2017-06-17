@@ -11,6 +11,7 @@
 class Snake {
 	std::vector<int> position;
 	bool isHead;
+
 public:
 	Snake(const std::vector<int> &position, bool isHead);
 
