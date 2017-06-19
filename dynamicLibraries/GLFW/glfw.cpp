@@ -2,49 +2,19 @@
 // Created by Charl THERON on 2017/06/14.
 //
 
-
+#include "../dylib.hpp"
 #include "glfw.hpp"
-gameControl::gameControl(int windowWidth, int windowHeight) {
-	this->widowHeight = windowHeight;
-	this->widowWidth = windowWidth;
-	glfwInit();
-	std::cout << "glfw Constructed" << std::endl;
-	createWindow();
-	glfwSetKeyCallback(window, (GLFWkeyfun) keyHooks);
-	updateWindow();
+
+gameControl::gameControl() {
+	GLFWwindow* window = glfwCreateWindow(640, 480, "My Title", NULL, NULL);
 }
 
-void gameControl::createWindow() {
-	this->window = glfwCreateWindow(this->widowWidth, this->widowHeight, "GLFW WINDOW", NULL, NULL);
-	if (!window) {
-		std::cout << "ERROR : Window Failed" << std::endl;
-		delete (this);
-	}
-	glfwMakeContextCurrent(window);
-}
 
 gameControl::~gameControl() {
 	std::cout << "glfw Deconstructed" << std::endl;
 	glfwTerminate();
 }
 
-void gameControl::updateWindow() {
-
-	while (!glfwWindowShouldClose(window)) {
-		glClear(GL_COLOR_BUFFER_BIT);
-
-		glfwSwapBuffers(window);
-
-		glfwPollEvents();
-	}
-	glfwDestroyWindow(window);
-}
-
-void gameControl::keyHooks(GLFWwindow *window, int key, int action) {
-	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
-		glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
 extern "C" gameControl* create() {
-	return new gameControl(700, 480);
+	return new gameControl();
 }
