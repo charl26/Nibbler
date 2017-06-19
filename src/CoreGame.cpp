@@ -28,11 +28,34 @@ void CoreGame::setPlayer(const std::list<Snake *, std::allocator<Snake *>> &play
 	CoreGame::player = player;
 }
 
+const std::list<Food *, std::allocator<Food *>> &CoreGame::getFood() const {
+	return food;
+}
+
+void CoreGame::setFood(const std::list<Food *, std::allocator<Food *>> &food) {
+	CoreGame::food = food;
+}
+
 CoreGame::CoreGame() {
 	std::cout << "CoreGame Constructor Called" << std::endl;
+	srand((unsigned)time(0));
 }
 
 void CoreGame::addSnakeSegment(const std::vector<int> &position, bool isHead) {
 	Snake *snakeSegment = new Snake(position, isHead);
 	player.push_back(snakeSegment);
+}
+
+void CoreGame::SpawnFood() {
+	if (CoreGame::food.size() < 5) {
+		Food *food = new Food(CoreGame::RandomPosition());
+		CoreGame::food.push_back(food);
+	}
+}
+
+std::vector<int> CoreGame::RandomPosition() {
+	int x = std::rand() / CoreGame::windowWidth;
+	int y = std::rand() / CoreGame::windowHeight;
+	std::vector<int> v = {x , y};
+	return (v);
 }
