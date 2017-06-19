@@ -2,11 +2,12 @@
 // Created by Craig MAYO on 2017/06/16.
 //
 
+#include "../dylib.hpp"
 #include "SFMLlib.hpp"
 
-gameControl::gameControl(int x) {
+gameControl::gameControl() {
 	std::cout<<"constuctor called"<<std::endl;
-	sf::Window window(sf::VideoMode(x*25, x*25), "My window");
+	sf::Window window(sf::VideoMode(25, 25), "My window");
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -26,8 +27,8 @@ gameControl::~gameControl() {
 	std::cout<<"destuctor called"<<std::endl;
 }
 
-extern "C" gameControl* create(int x){
-		return new gameControl(x);
+extern "C" gameControl* create(){
+		return new gameControl();
 }
 extern "C" void destroy(gameControl* p) {
 	delete p;

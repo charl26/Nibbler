@@ -9,16 +9,4 @@ extern "C"
 #include <SFML/Window.hpp>
 #include <iostream>
 
-class gameControl {
-public:
-	gameControl(int x);
-	~gameControl();
-};
-
-//gameControl* newlibinst();
-
-
-// the types of the class factories
-typedef gameControl* create_t(int x);
-typedef void destroy_t(gameControl*);
 #endif //NIBBLER_SFMLLIB_HPP
