@@ -1,20 +1,12 @@
 #include "CoreGame.hpp"
 #include "snake.hpp"
 
-int windowWidth;
-int windowHeight;
-std::list<Snake*> player;
-
-void addSnakeSegment(const std::vector<int> &position) {
-	Snake *snakeSegment = new Snake(position, false);
-	player.push_back(snakeSegment);
-}
+CoreGame *game = new CoreGame();
 
 void genStartingSnake(const std::vector<int> &start) {
-	Snake *snakeHead = new Snake(start, true);
-	player.push_back(snakeHead);
-	while (player.size() < 5) {
-		addSnakeSegment(start);
+	game->addSnakeSegment(start, true);
+	while (game->getPlayer().size() < 5) {
+		game->addSnakeSegment(start, false);
 	}
 }
 
@@ -26,7 +18,7 @@ void startGame() {
 	          << std::endl;
 	int GUI;
 	std::cin >> std::ws >> GUI;
-	std::vector<int> start = {windowHeight /2, windowWidth/2};
+	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
 	genStartingSnake(start);
 	switch (GUI) {
 		case 1: {
@@ -53,19 +45,19 @@ void startGame() {
 
 int main(int argc, char **argv) {
 	if (argc == 3) {
-		windowWidth = std::atoi(argv[1]);
-		windowHeight = std::atoi(argv[2]);
-		if (0 != windowWidth || 0 != windowHeight) {
-			if (windowWidth >= MinWindow && windowWidth <= MaxWindow){
-				if (windowHeight >= MinWindow && windowHeight <= MaxWindow) {
+		game->setWindowWidth(std::atoi(argv[1]));
+		game->setWindowHeight(std::atoi(argv[2]));
+		if (0 != game->getWindowWidth() || 0 != game->getWindowHeight()) {
+			if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow) {
+				if (game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow) {
 					startGame();
-				}else{
+				} else {
 					std::cout << "ERROR : Window Height is incorrect." << std::endl;
 				}
-			} else{
+			} else {
 				std::cout << "ERROR : Window Width is incorrect." << std::endl;
 			}
-		}else {
+		} else {
 			std::cout << "ERROR : Window arguments are incorrect." << std::endl;
 		}
 	} else {

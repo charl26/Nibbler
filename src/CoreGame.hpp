@@ -13,7 +13,25 @@
 #define MinWindow 50
 
 class CoreGame {
+	int windowWidth;
+	int windowHeight;
+	std::list<Snake*> player;
+public:
+	CoreGame();
 
+	int getWindowWidth() const;
+
+	void setWindowWidth(int windowWidth);
+
+	int getWindowHeight() const;
+
+	void setWindowHeight(int windowHeight);
+
+	const std::list<Snake *, std::allocator<Snake *>> &getPlayer() const;
+
+	void setPlayer(const std::list<Snake *, std::allocator<Snake *>> &player);
+
+	void addSnakeSegment(const std::vector<int> &position, bool isHead);
 };
 
 #endif //NIBBLER_COREGAME_HPP
