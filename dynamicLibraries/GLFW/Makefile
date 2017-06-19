@@ -1,4 +1,4 @@
-NAME		=	dynamicLibGLFW.so
+NAME		=	GLFWlib.so
 SRC			=	glfw.cpp
 OBJ         =   $(SRCS:.cpp=.o)
 
