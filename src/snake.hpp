@@ -18,4 +18,4 @@ public:
 	virtual ~Snake();
 };
 
-#endif //NIBBLER_SNAKE_HPP
+#endif
