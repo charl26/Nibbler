@@ -6,6 +6,10 @@ git submodule update ;
 cmake --version;
 
 if [[ $? == 127 ]]; then
+	brew --version
+	if [[ $? == 127 ]]; then
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/Tolsadus/42homebrewfix/master/install.sh)"
+	fi
 	brew install cmake;
 fi
 

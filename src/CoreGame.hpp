@@ -13,6 +13,10 @@
 #define MaxWindow 700
 #define MinWindow 50
 
+#define GLFWLIB "../dynamicLibraries/GLFW/GLFWlib.so"
+#define SDL2LIB "../dynamicLibraries/SDL2/SDL2lib.so"
+#define SMFLLIB "../dynamicLibraries/SMFL/SFMLlib.so"
+
 class CoreGame {
 private:
 	int windowWidth;

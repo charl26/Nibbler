@@ -1,3 +1,4 @@
+#include <dlfcn.h>
 #include "CoreGame.hpp"
 
 CoreGame *game = new CoreGame();
@@ -9,6 +10,10 @@ void genStartingSnake(const std::vector<int> &start) {
 	}
 }
 
+void runGame(void *handle) {
+
+}
+
 void startGame() {
 	std::cout << "Please Enter Starting GUI"
 	          << std::endl << ": 1 = SDL"
@@ -16,6 +21,7 @@ void startGame() {
 	          << std::endl << ": 3 = GLFW"
 	          << std::endl;
 	int GUI;
+	void *handle = NULL;
 	std::cin >> std::ws >> GUI;
 	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
 	genStartingSnake(start);
@@ -23,17 +29,17 @@ void startGame() {
 	switch (GUI) {
 		case 1: {
 			std::cout << "Starting GUI SDL" << std::endl;
-			//TODO add start up for GUI 1
+			handle = dlopen(SDL2LIB, RTLD_LAZY);
 			break;
 		}
 		case 2: {
 			std::cout << "Starting GUI SFML" << std::endl;
-			//TODO add start up for GUI 2
+			handle = dlopen(SMFLLIB, RTLD_LAZY);
 			break;
 		}
 		case 3: {
 			std::cout << "Starting GUI GLFW" << std::endl;
-			//TODO add start up for GUI 3
+			handle = dlopen(GLFWLIB, RTLD_LAZY);
 			break;
 		}
 		default: {
@@ -41,6 +47,8 @@ void startGame() {
 			startGame();
 		}
 	}
+
+	runGame(handle);
 }
 
 int main(int argc, char **argv) {
