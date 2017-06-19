@@ -1,5 +1,4 @@
 #include "CoreGame.hpp"
-#include "snake.hpp"
 
 CoreGame *game = new CoreGame();
 
@@ -20,6 +19,7 @@ void startGame() {
 	std::cin >> std::ws >> GUI;
 	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
 	genStartingSnake(start);
+	game->SpawnFood();
 	switch (GUI) {
 		case 1: {
 			std::cout << "Starting GUI SDL" << std::endl;
