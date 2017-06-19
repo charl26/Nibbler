@@ -5,7 +5,7 @@ int windowWidth;
 int windowHeight;
 std::list<Snake*> player;
 
-void addSnakeSegment(const std::vector<int> position) {
+void addSnakeSegment(const std::vector<int> &position) {
 	Snake *snakeSegment = new Snake(position, false);
 	player.push_back(snakeSegment);
 }
@@ -50,7 +50,6 @@ void startGame() {
 		}
 	}
 }
-
 
 int main(int argc, char **argv) {
 	if (argc == 3) {
