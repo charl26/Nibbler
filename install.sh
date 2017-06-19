@@ -7,7 +7,6 @@ cmake --version;
 
 if [[ $? == 127 ]]; then
 	brew install cmake;
-	exit ;
 fi
 
 (cd graphicsLibraries/SFML && cmake . && make);
