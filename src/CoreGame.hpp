@@ -14,6 +14,12 @@
 #include <zconf.h>
 #include "snake.hpp"
 #include "Food.hpp"
+#define MaxWindow 700
+#define MinWindow 50
+
+#define GLFWLIB "../dynamicLibraries/GLFW/GLFWlib.so"
+#define SDL2LIB "../dynamicLibraries/SDL2/SDL2lib.so"
+#define SMFLLIB "../dynamicLibraries/SFML/SFMLlib.so"
 
 class CoreGame {
 private:
