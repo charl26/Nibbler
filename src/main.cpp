@@ -1,10 +1,10 @@
 #include "CoreGame.hpp"
-#include "snake.hpp"
 
 CoreGame *game = new CoreGame();
 
 void genStartingSnake(const std::vector<int> &start) {
 	game->addSnakeSegment(start, true);
+
 	while (game->getPlayer().size() < 5) {
 		game->addSnakeSegment(start, false);
 	}
@@ -20,6 +20,7 @@ void startGame() {
 	std::cin >> std::ws >> GUI;
 	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
 	genStartingSnake(start);
+	game->SpawnFood();
 	switch (GUI) {
 		case 1: {
 			std::cout << "Starting GUI SDL" << std::endl;
@@ -45,23 +46,15 @@ void startGame() {
 
 int main(int argc, char **argv) {
 	if (argc == 3) {
-		game->setWindowWidth(std::atoi(argv[1]));
-		game->setWindowHeight(std::atoi(argv[2]));
-		if (0 != game->getWindowWidth() || 0 != game->getWindowHeight()) {
-			if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow) {
-				if (game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow) {
-					startGame();
-				} else {
-					std::cout << "ERROR : Window Height is incorrect." << std::endl;
-				}
-			} else {
-				std::cout << "ERROR : Window Width is incorrect." << std::endl;
-			}
-		} else {
-			std::cout << "ERROR : Window arguments are incorrect." << std::endl;
-		}
-	} else {
-		std::cout << "ERROR : Incorrect amount of arguments." << std::endl;
-	}
+        game->setWindowWidth(std::atoi(argv[1]));
+        game->setWindowHeight(std::atoi(argv[2]));
+
+        if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow &&
+            game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow)
+            startGame();
+        else
+            std::cout << "ERROR: Window size is incorrect." << std::endl;
+    } else
+        std::cout << "ERROR: Invalid number of Arguments" << std::endl;
 	return 0;
 }
