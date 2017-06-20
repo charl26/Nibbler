@@ -48,18 +48,13 @@ int main(int argc, char **argv) {
 	if (argc == 3) {
         game->setWindowWidth(std::atoi(argv[1]));
         game->setWindowHeight(std::atoi(argv[2]));
-        if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow) {
-            if (game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow) {
-                startGame();
-            } else {
-                std::cout << "ERROR : Window Height is incorrect." << std::endl;
-            }
-        } else {
-            std::cout << "ERROR : Window Width is incorrect." << std::endl;
-        }
-    } else {
-		std::cout << "ERROR : Incorrect amount of arguments." << std::endl;
-	}
-    // TODO: These nested IF's are messy. Clean it up.
+
+        if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow &&
+            game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow)
+            startGame();
+        else
+            std::cout << "ERROR: Window size is incorrect." << std::endl;
+    } else
+        std::cout << "ERROR: Invalid number of Arguments" << std::endl;
 	return 0;
 }
