@@ -4,7 +4,7 @@
 
 #include "snake.hpp"
 
-Snake::Snake(const std::vector<int> &position, bool head) : position(position), head(head) {
+Snake::Snake(const std::vector<int> &position, bool head, int direction) : position(position), head(head), direction(direction) {
 	std::cout << "Snake Constructor Called" << std::endl;
 }
 
@@ -40,3 +40,19 @@ Snake::Snake(const Snake &snake) {
 }
 
 Snake::Snake() {}
+
+int Snake::getDirection() const {
+	return direction;
+}
+
+void Snake::setDirection(int direction) {
+	Snake::direction = direction;
+}
+
+const std::vector<int> &Snake::getLastP() const {
+	return lastP;
+}
+
+void Snake::setLastP(const std::vector<int> &lastP) {
+	Snake::lastP = lastP;
+}
