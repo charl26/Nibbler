@@ -5,9 +5,13 @@
 #include "../dylib.hpp"
 #include "SFMLlib.hpp"
 
-gameControl::gameControl() {
+gameControl::gameControl(CoreGame *ref) {
+	ScreenH = ref->getWindowHeight();
+	std::cout<<ScreenH<<std::endl;
+	ScreenW = ref->getWindowWidth();
+
 	std::cout<<"constuctor called"<<std::endl;
-	sf::Window window(sf::VideoMode(25, 25), "My window");
+	sf::Window window(sf::VideoMode(ScreenW, ScreenH), "My window");
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -27,11 +31,19 @@ gameControl::~gameControl() {
 	std::cout<<"destuctor called"<<std::endl;
 }
 
-extern "C" gameControl* create(){
-		return new gameControl();
+void gameControl::draw() {
+
 }
-extern "C" void destroy(gameControl* p) {
-	delete p;
+
+void gameControl::update() {
+
 }
+
+int gameControl::getScreenW() const {return ScreenW;}
+void gameControl::setScreenW(int ScreenW) {gameControl::ScreenW = ScreenW;}
+int gameControl::getScreenH() const {return ScreenH;}
+void gameControl::setScreenH(int ScreenH) {gameControl::ScreenH = ScreenH;}
+
+extern "C" gameControl* create(CoreGame *ref){return new gameControl(ref);}
 
 

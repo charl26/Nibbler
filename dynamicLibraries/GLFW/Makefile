@@ -11,7 +11,8 @@ GLFW        =   ../../graphicsLibraries/glfw/src/libglfw3.a
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	$(CC) $(SRC) -undefined dynamic_lookup $(GLFW) ${LDFLAGS} $(NAME)
+	$(CC) $(SRC) -undefined dynamic_lookup $(GLFW) ${LDFLAGS} $(NAME) -std=gnu++11
+	@rm -f $(OBJ)
 
 clean:
 	$(RM) glfw.o
