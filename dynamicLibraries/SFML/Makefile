@@ -1,25 +1,25 @@
 NAME = SFMLlib.so
 
-SRC = SFMLlib.cpp
-OBJ = SFMLlib.o
+SRC = SFMLlib.cpp ../../src/CoreGame.cpp ../../src/snake.cpp
+OBJ = SFMLlib.o CoreGame.o snake.o
 CC = clang++
 
 DLCFLAG  = -L./../../graphicsLibraries/SFML/lib
-DLCFLAG += -lsfml-window
 DLCFLAG += -lsfml-system
-CFLAG += -fPIC -c -Wall -Werror -Wextra
+DLCFLAG += -lsfml-network
+DLCFLAG += -lsfml-window
+DLCFLAG += -framework OpenGL -framework Cocoa
+DLCFLAG += -Wl,-rpath,./../graphicsLibrairies/SFML/lib
+CFLAG += -fPIC -c -Wall -Wextra -std=gnu++11
 
 all: $(NAME)
 
 $(NAME):
-	@$(SET_INC_PATH)
-	@echo "Path set 1"
-	@$(SET_LIB_PATH)
-	@echo "Path set 2"
-	@$(CC) $(SRC) $(CFLAG) -I./../../graphicsLibraries/SFML/include
+	@$(CC) $(SRC)   $(CFLAG) -I./../../graphicsLibraries/SFML/include
 	@echo "object file created"
-	@$(CC) $(OBJ) -shared -o $(NAME) $(DLCFLAG)
+	@$(CC) $(OBJ) -fPIC -shared -o $(NAME) $(DLCFLAG)
 	@echo "compile shared lib"
+	@rm -f $(OBJ)
 
 clean:
 	@rm -f $(OBJ)

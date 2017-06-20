@@ -30,6 +30,7 @@ void CoreGame::setPlayer(const std::list<Snake *, std::allocator<Snake *>> &play
 
 CoreGame::CoreGame() {
 	std::cout << "CoreGame Constructor Called" << std::endl;
+
 }
 
 void CoreGame::addSnakeSegment(const std::vector<int> &position, bool isHead) {

@@ -14,7 +14,7 @@ private:
 	int ScreenH;
 
 public:
-	gameControl(CoreGame &ref);
+	gameControl(CoreGame *ref);
 	void    draw();
 	void    update();
 	virtual ~gameControl();
@@ -25,6 +25,6 @@ public:
 	void setScreenH(int ScreenH);
 };
 
-typedef gameControl* create_t();
+typedef gameControl* create_t(CoreGame *ref);
 
 #endif //DYLIB_HPP

@@ -5,12 +5,13 @@
 #include "../dylib.hpp"
 #include "SFMLlib.hpp"
 
-gameControl::gameControl(CoreGame &ref) {
-	ScreenH = ref.getWindowHeight();
-	ScreenW = ref.getWindowWidth();
+gameControl::gameControl(CoreGame *ref) {
+	ScreenH = ref->getWindowHeight();
+	std::cout<<ScreenH<<std::endl;
+	ScreenW = ref->getWindowWidth();
 
 	std::cout<<"constuctor called"<<std::endl;
-	sf::Window window(sf::VideoMode(ScreenH, ScreenW), "My window");
+	sf::Window window(sf::VideoMode(ScreenW, ScreenH), "My window");
 
 	// run the program as long as the window is open
 	while (window.isOpen())
@@ -43,6 +44,6 @@ void gameControl::setScreenW(int ScreenW) {gameControl::ScreenW = ScreenW;}
 int gameControl::getScreenH() const {return ScreenH;}
 void gameControl::setScreenH(int ScreenH) {gameControl::ScreenH = ScreenH;}
 
-extern "C" gameControl* create(){return new gameControl();}
+extern "C" gameControl* create(CoreGame *ref){return new gameControl(ref);}
 
 
