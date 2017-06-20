@@ -4,6 +4,7 @@ CoreGame *game = new CoreGame();
 
 void genStartingSnake(const std::vector<int> &start) {
 	game->addSnakeSegment(start, true);
+
 	while (game->getPlayer().size() < 5) {
 		game->addSnakeSegment(start, false);
 	}
@@ -45,23 +46,20 @@ void startGame() {
 
 int main(int argc, char **argv) {
 	if (argc == 3) {
-		game->setWindowWidth(std::atoi(argv[1]));
-		game->setWindowHeight(std::atoi(argv[2]));
-		if (0 != game->getWindowWidth() || 0 != game->getWindowHeight()) {
-			if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow) {
-				if (game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow) {
-					startGame();
-				} else {
-					std::cout << "ERROR : Window Height is incorrect." << std::endl;
-				}
-			} else {
-				std::cout << "ERROR : Window Width is incorrect." << std::endl;
-			}
-		} else {
-			std::cout << "ERROR : Window arguments are incorrect." << std::endl;
-		}
-	} else {
+        game->setWindowWidth(std::atoi(argv[1]));
+        game->setWindowHeight(std::atoi(argv[2]));
+        if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow) {
+            if (game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow) {
+                startGame();
+            } else {
+                std::cout << "ERROR : Window Height is incorrect." << std::endl;
+            }
+        } else {
+            std::cout << "ERROR : Window Width is incorrect." << std::endl;
+        }
+    } else {
 		std::cout << "ERROR : Incorrect amount of arguments." << std::endl;
 	}
+    // TODO: These nested IF's are messy. Clean it up.
 	return 0;
 }
