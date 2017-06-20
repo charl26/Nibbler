@@ -3,10 +3,15 @@
 CoreGame *game = new CoreGame();
 
 void genStartingSnake(const std::vector<int> &start) {
+	std::vector<int> pos;
+
 	game->addSnakeSegment(start, true);
+	pos = start;
+	pos[0]++;
 
 	while (game->getPlayer().size() < 5) {
-		game->addSnakeSegment(start, false);
+		game->addSnakeSegment(pos, false);
+		pos[0]++;
 	}
 }
 
@@ -52,9 +57,29 @@ int main(int argc, char **argv) {
         if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow &&
             game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow)
             startGame();
-        else
-            std::cout << "ERROR: Window size is incorrect." << std::endl;
-    } else
-        std::cout << "ERROR: Invalid number of Arguments" << std::endl;
+        else {
+			std::cout << "ERROR: Window size is incorrect." << std::endl;
+			return (-1);
+		}
+    } else {
+		std::cout << "ERROR: Invalid number of Arguments" << std::endl;
+		return (-1);
+	}
+
+	switch (game->getState()) {
+		case 1: {
+			// TODO: Menu state
+		}
+		case 2: {
+			while (game->getState() == 2)
+				game->CheckInput();
+		}
+		case 3: {
+			// TODO: Game over state
+		}
+		default: {
+			game->setState(2); // TODO: Update to 1 - Menu state
+		}
+	}
 	return 0;
 }
