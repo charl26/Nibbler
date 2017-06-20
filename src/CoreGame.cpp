@@ -54,8 +54,26 @@ void CoreGame::SpawnFood() {
 }
 
 std::vector<int> CoreGame::RandomPosition() {
-	int x = std::rand() / CoreGame::windowWidth;
-	int y = std::rand() / CoreGame::windowHeight;
+	int x = std::rand() % CoreGame::getWindowWidth();
+	int y = std::rand() % CoreGame::getWindowHeight();
 	std::vector<int> v = {x , y};
+
+    std::cout << "Food Random X: " << x << std::endl;
+    std::cout << "Food Random Y: " << y << std::endl;
 	return (v);
 }
+
+CoreGame CoreGame::operator=(const CoreGame &rhs) {
+	CoreGame::food = rhs.getFood();
+	CoreGame::player = rhs.getPlayer();
+	CoreGame::windowWidth = rhs.getWindowWidth();
+	CoreGame::windowHeight = rhs.getWindowHeight();
+
+	return (*this);
+}
+
+CoreGame::CoreGame(const CoreGame &coreGame) {
+	CoreGame::operator=(coreGame);
+}
+
+CoreGame::~CoreGame() {}

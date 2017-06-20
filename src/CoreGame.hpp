@@ -3,15 +3,15 @@
 //
 
 #ifndef NIBBLER_COREGAME_HPP
-#define NIBBLER_COREGAME_HPP
+
+# define NIBBLER_COREGAME_HPP
+# define MaxWindow 700
+# define MinWindow 50
 
 #include <iostream>
 #include <list>
 #include "snake.hpp"
 #include "Food.hpp"
-
-#define MaxWindow 700
-#define MinWindow 50
 
 class CoreGame {
 private:
@@ -20,11 +20,13 @@ private:
 	std::list<Snake *> player;
 	std::list<Food *> food;
 
-	std::vector<int> RandomPosition();
+    CoreGame(const CoreGame &coreGame);
+    std::vector<int> RandomPosition();
 
 public:
 	CoreGame();
-	int getWindowWidth() const;
+    CoreGame operator=(const CoreGame &rhs);
+    int getWindowWidth() const;
 	void setWindowWidth(int windowWidth);
 	int getWindowHeight() const;
 	void setWindowHeight(int windowHeight);
@@ -34,6 +36,7 @@ public:
 	const std::list<Food *, std::allocator<Food *>> &getFood() const;
 	void setFood(const std::list<Food *, std::allocator<Food *>> &food);
 	void SpawnFood();
+    virtual ~CoreGame();
 };
 
 #endif //NIBBLER_COREGAME_HPP
