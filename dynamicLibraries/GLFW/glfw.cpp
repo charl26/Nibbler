@@ -68,3 +68,5 @@ int gameControl::getScreenH() const {return ScreenH;}
 void gameControl::setScreenH(int ScreenH) {gameControl::ScreenH = ScreenH;}
 
 extern "C" gameControl* create(CoreGame *ref){return new gameControl(ref);}
+
+extern "C" void destroy(CoreGame* coreGame) { delete coreGame; }

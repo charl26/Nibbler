@@ -26,5 +26,6 @@ public:
 };
 
 typedef gameControl* create_t(CoreGame *ref);
-
-#endif //DYLIB_HPP
+typedef void destroy_t(gameControl*);
+typedef void* screen_t(gameControl *obj);
+#endif
