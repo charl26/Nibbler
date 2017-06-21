@@ -25,7 +25,11 @@ void runGame(void *handle) {
 		std::cerr << "Cannot load symbol create: " << dlsym_error << std::endl;
 	}
 	gameControl *win = create(game);
-	create(game);
+	screen_t *screen = (screen_t *) dlsym(handle, "screen");
+	destroy_t *destroy = (destroy_t *) dlsym(handle, "destroy");
+	//TODO ADD TO GAME LOOP
+	screen(win);
+	destroy(win);
 }
 
 void startGame() {
@@ -83,6 +87,7 @@ int main(int argc, char **argv) {
 		std::cout << "ERROR: Invalid number of Arguments" << std::endl;
 		return (-1);
 	}
+/*
 
 	switch (game->getState()) {
 		case 1: {
@@ -101,5 +106,6 @@ int main(int argc, char **argv) {
 			game->setState(2); // TODO: Update to 1 - Menu state
 		}
 	}
+*/
 	return 0;
 }
