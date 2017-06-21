@@ -10,12 +10,10 @@
 
 #include <iostream>
 #include <list>
-#include <termios.h>
 #include <zconf.h>
+#include <unistd.h>
 #include "snake.hpp"
 #include "Food.hpp"
-#define MaxWindow 700
-#define MinWindow 50
 
 #define GLFWLIB "../dynamicLibraries/GLFW/GLFWlib.so"
 #define SDL2LIB "../dynamicLibraries/SDL2/SDL2lib.so"
@@ -48,7 +46,8 @@ public:
 	int getState() const;
 	void setState(int state);
 	void CheckInput();
-	void Move();
+	void MoveSegments();
+    void MoveHead();
     virtual ~CoreGame();
 };
 
