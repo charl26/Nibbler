@@ -16,3 +16,6 @@ fi
 (cd graphicsLibraries/SFML && cmake . && make);
 (cd graphicsLibraries/SDL2 && cmake . && make);
 (cd graphicsLibraries/glfw && cmake . && make);
+
+(cd dynamicLibraries/GLFW && make re);
+(cd dynamicLibraries/SFML && make re);
