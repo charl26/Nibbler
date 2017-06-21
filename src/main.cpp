@@ -16,10 +16,6 @@ void genStartingSnake(const std::vector<int> &start) {
 	}
 }
 
-void runGame(void *handle) {
-
-}
-
 void startGame() {
 	std::cout << "Please Enter Starting GUI"
 	          << std::endl << ": 1 = SDL"
@@ -53,8 +49,6 @@ void startGame() {
 			startGame();
 		}
 	}
-
-	runGame(handle);
 }
 
 int main(int argc, char **argv) {
@@ -79,8 +73,10 @@ int main(int argc, char **argv) {
 			// TODO: Menu state
 		}
 		case 2: {
-			while (game->getState() == 2)
-				game->CheckInput();
+			while (game->getState() == 2) {
+                game->CheckInput();
+                game->MoveHead();
+            }
 		}
 		case 3: {
 			// TODO: Game over state
