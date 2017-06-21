@@ -58,8 +58,6 @@ void *startGame() {
 }
 
 void runGame() {
-
-
 	void * handle = startGame();
 	create_t* create = (create_t*) dlsym(handle, "create");
 	const char* dlsym_error = dlerror();
@@ -89,7 +87,6 @@ void runGame() {
 		}
 	}
 }
-
 
 int main(int argc, char **argv) {
 	if (argc == 3) {

@@ -30,9 +30,9 @@ gameControl::~gameControl() {
 
 void gameControl::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
-	int width, height;
-	glfwGetFramebufferSize(window, &width, &height);
-	glViewport(0, 0, width, height);
+	glfwGetFramebufferSize(window, &this->ScreenW, &this->ScreenH);
+	glViewport(0, 0, this->ScreenW, this->ScreenH);
+
 	glfwSwapBuffers(window);
 	glfwSwapInterval(1);
 	glfwPollEvents();
