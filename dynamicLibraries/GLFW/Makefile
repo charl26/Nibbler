@@ -6,7 +6,7 @@ CC          =   g++
 CPPFLAGS    =   -fPIC -c -Wall -Wextra
 LDFLAGS     =   -shared -o
 RM          =   rm -rf
-GLFW        =   ../../graphicsLibraries/glfw/src/libglfw3.a
+GLFW        =   ../../graphicsLibraries/glfw/src/libglfw3.a -framework Cocoa -framework OpenGL -framework IOKit -framework CoreVideo
 
 all: $(NAME)
 
