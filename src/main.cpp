@@ -22,9 +22,9 @@ void runGame(void *handle) {
 	create_t* create = (create_t*) dlsym(handle, "create");
 	const char* dlsym_error = dlerror();
 	if (dlsym_error) {
-		std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+		std::cerr << "Cannot load symbol create: " << dlsym_error << std::endl;
 	}
-
+	gameControl *win = create(game);
 	create(game);
 }
 
