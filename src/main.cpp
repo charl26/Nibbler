@@ -1,5 +1,6 @@
 #include <dlfcn.h>
 #include "CoreGame.hpp"
+#include "../dynamicLibraries/dylib.hpp"
 
 CoreGame *game = new CoreGame();
 
@@ -18,6 +19,13 @@ void genStartingSnake(const std::vector<int> &start) {
 
 void runGame(void *handle) {
 
+	create_t* create = (create_t*) dlsym(handle, "create");
+	const char* dlsym_error = dlerror();
+	if (dlsym_error) {
+		std::cerr << "Cannot load symbol create: " << dlsym_error << '\n';
+	}
+
+	create(game);
 }
 
 void startGame() {
@@ -53,7 +61,9 @@ void startGame() {
 			startGame();
 		}
 	}
-
+	if (!handle) {
+		std::cerr << "Cannot load library: " << dlerror() << std::endl;
+	}
 	runGame(handle);
 }
 

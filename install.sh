@@ -19,3 +19,5 @@ fi
 
 (cd dynamicLibraries/GLFW && make re);
 (cd dynamicLibraries/SFML && make re);
+
+(cd graphicsLibraries/SFML/extlibs && mv Frameworks ../)
