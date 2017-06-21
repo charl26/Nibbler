@@ -89,8 +89,10 @@ int main(int argc, char **argv) {
 			// TODO: Menu state
 		}
 		case 2: {
-			while (game->getState() == 2)
-				game->CheckInput();
+			while (game->getState() == 2) {
+                game->CheckInput();
+                game->MoveHead();
+            }
 		}
 		case 3: {
 			// TODO: Game over state
