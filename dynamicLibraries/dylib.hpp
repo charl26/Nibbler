@@ -12,7 +12,7 @@ class gameControl {
 private:
 	int ScreenW;
 	int ScreenH;
-
+	CoreGame *coreGame;
 public:
 	gameControl(CoreGame *ref);
 	void    draw();
@@ -26,5 +26,7 @@ public:
 };
 
 typedef gameControl* create_t(CoreGame *ref);
+typedef void destroy_t(gameControl*);
+typedef void* screen_t(gameControl *obj);
 
-#endif //DYLIB_HPP
+#endif

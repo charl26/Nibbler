@@ -17,18 +17,7 @@ void genStartingSnake(const std::vector<int> &start) {
 	}
 }
 
-void runGame(void *handle) {
-
-	create_t* create = (create_t*) dlsym(handle, "create");
-	const char* dlsym_error = dlerror();
-	if (dlsym_error) {
-		std::cerr << "Cannot load symbol create: " << dlsym_error << std::endl;
-	}
-	gameControl *win = create(game);
-	create(game);
-}
-
-void startGame() {
+void *startGame() {
 	std::cout << "Please Enter Starting GUI"
 	          << std::endl << ": 1 = SDL"
 	          << std::endl << ": 2 = SFML"
@@ -61,10 +50,42 @@ void startGame() {
 			startGame();
 		}
 	}
-	if (!handle) {
-		std::cerr << "Cannot load library: " << dlerror() << std::endl;
+	if (handle) {
+		return handle;
 	}
-	runGame(handle);
+	std::cerr << "Cannot load library: " << dlerror() << std::endl;
+	exit (-1);
+}
+
+void runGame() {
+	void * handle = startGame();
+	create_t* create = (create_t*) dlsym(handle, "create");
+	const char* dlsym_error = dlerror();
+	if (dlsym_error) {
+		std::cerr << "Cannot load symbol create: " << dlsym_error << std::endl;
+	}
+	gameControl *win = create(game);
+	screen_t *screen = (screen_t *) dlsym(handle, "screen");
+	destroy_t *destroy = (destroy_t *) dlsym(handle, "destroy");
+	switch (game->getState()) {
+		case 1: {
+			// TODO: Menu state
+		}
+		case 2: {
+			while (game->getState() == 2) {
+				game->CheckInput();
+				game->MoveHead();
+				screen(win);
+			}
+		}
+		case 3: {
+			// TODO: Game over state
+		}
+		default: {
+			destroy(win);
+			game->setState(2); // TODO: Update to 1 - Menu state
+		}
+	}
 }
 
 int main(int argc, char **argv) {
@@ -74,7 +95,7 @@ int main(int argc, char **argv) {
 
         if (game->getWindowWidth() >= MinWindow && game->getWindowWidth() <= MaxWindow &&
             game->getWindowHeight() >= MinWindow && game->getWindowHeight() <= MaxWindow)
-            startGame();
+            runGame();
         else {
 			std::cout << "ERROR: Window size is incorrect." << std::endl;
 			return (-1);
@@ -82,24 +103,6 @@ int main(int argc, char **argv) {
     } else {
 		std::cout << "ERROR: Invalid number of Arguments" << std::endl;
 		return (-1);
-	}
-
-	switch (game->getState()) {
-		case 1: {
-			// TODO: Menu state
-		}
-		case 2: {
-			while (game->getState() == 2) {
-                game->CheckInput();
-                game->MoveHead();
-            }
-		}
-		case 3: {
-			// TODO: Game over state
-		}
-		default: {
-			game->setState(2); // TODO: Update to 1 - Menu state
-		}
 	}
 	return 0;
 }
