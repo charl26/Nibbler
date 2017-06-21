@@ -19,3 +19,5 @@ fi
 
 (cd dynamicLibraries/GLFW && make re);
 (cd dynamicLibraries/SFML && make re);
+
+(mv graphicsLibraries/SFML/extlibs/libs-osx/Frameworks graphicsLibraries/SFML)
