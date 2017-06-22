@@ -6,7 +6,7 @@
 #include "glfw.hpp"
 
 GLFWwindow *window;
-
+static void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods);
 gameControl::gameControl(CoreGame *ref) {
 	ScreenH = ref->getWindowHeight();
 	ScreenW = ref->getWindowWidth();
@@ -32,7 +32,6 @@ void gameControl::draw() {
 	glClear(GL_COLOR_BUFFER_BIT);
 	glfwGetFramebufferSize(window, &this->ScreenW, &this->ScreenH);
 	glViewport(0, 0, this->ScreenW, this->ScreenH);
-
 	glfwSwapBuffers(window);
 	glfwSwapInterval(1);
 	glfwPollEvents();
@@ -41,11 +40,11 @@ void gameControl::draw() {
 void gameControl::update() {
 
 }
-static int gameControl::getScreenW() { return ScreenW; }
+int gameControl::getScreenW() { return ScreenW; }
 
 void gameControl::setScreenW(int ScreenW) { gameControl::ScreenW = ScreenW; }
 
-static int gameControl::getScreenH() { return ScreenH; }
+int gameControl::getScreenH() { return ScreenH; }
 
 void gameControl::setScreenH(int ScreenH) { gameControl::ScreenH = ScreenH; }
 
