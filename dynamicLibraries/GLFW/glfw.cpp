@@ -20,7 +20,10 @@ gameControl::gameControl(CoreGame *ref) {
 		std::cout << "glfw did not initialize window!" << std::endl;
 	}
 	glfwMakeContextCurrent(window);
+
 	glfwSetInputMode(window, GLFW_STICKY_KEYS, 1);
+	glMatrixMode(GL_PROJECTION);
+
 	std::cout << "DYLIB GLFW Constructed" << std::endl;
 }
 
@@ -86,15 +89,50 @@ void gameControl::processInput(GLFWwindow *window) {
 		glfwSetWindowShouldClose(window, true);
 }
 
+void display(CoreGame *coreGame) {
+	static int boxleft = 100,
+			boxbottom = 100;
+	int boxwidth = 50,
+			boxheight = 50;
+
+	int screenwidth = 1200, screenheight = 1200;
+	// clear last frame
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	// calculate screen space coordinates
+	float left = (float) boxleft / screenwidth,
+			right = left + (float) boxwidth / screenwidth,
+			bottom = (float) boxbottom / screenheight,
+			top = bottom + (float) boxheight / screenheight;
+
+	if (coreGame->getPlayer()[0]->getDirection() == RIGHT)
+		boxleft--;
+	else if (coreGame->getPlayer()[0]->getDirection() == LEFT)
+		boxleft++;
+	else if (coreGame->getPlayer()[0]->getDirection() == DOWN)
+		boxbottom--;
+	else {
+		boxbottom++;
+	}
+	glBegin(GL_QUADS);
+	glColor3f(1.0f, 0.0f, 0.0f);
+	glVertex2f(left, top);
+	glVertex2f(right, top);
+	glVertex2f(right, bottom);
+	glVertex2f(left, bottom);
+	glEnd();
+	glFlush();
+
+}
+
 void gameControl::draw() {
 	if (!glfwWindowShouldClose(window)) {
-		glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+		window = glfwGetCurrentContext();
+		processInput(window);
+		display(coreGame);
 		glfwGetFramebufferSize(window, &this->ScreenW, &this->ScreenH);
-		glViewport(0, 0, this->ScreenW, this->ScreenH);
 		glfwSwapBuffers(window);
 		glfwSwapInterval(1);
-		processInput(window);
 		glfwPollEvents();
 	} else {
 		glfwTerminate();
