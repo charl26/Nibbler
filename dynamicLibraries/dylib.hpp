@@ -23,6 +23,7 @@ public:
 	void setScreenW(int ScreenW);
 	int getScreenH();
 	void setScreenH(int ScreenH);
+	void controls();
 };
 
 typedef gameControl* create_t(CoreGame *ref);
