@@ -32,92 +32,22 @@ gameControl::~gameControl() {
 	glfwTerminate();
 }
 
-void gameControl::controls(){
-	int esc = glfwGetKey(window, GLFW_KEY_ESCAPE);
-	int left = glfwGetKey(window, GLFW_KEY_LEFT);
-	int right = glfwGetKey(window, GLFW_KEY_RIGHT);
-	int one = glfwGetKey(window, GLFW_KEY_1);
-	int two = glfwGetKey(window, GLFW_KEY_2);
-	int three = glfwGetKey(window, GLFW_KEY_3);
-
-	if (left == GLFW_PRESS){
-		switch (coreGame->getPlayer()[0]->getDirection()) {
-			case LEFT:
-			{
-				coreGame->getPlayer()[0]->setDirection(DOWN);
-				break;
-			}
-			case RIGHT:
-			{
-				coreGame->getPlayer()[0]->setDirection(UP);
-				break;
-			}
-			case UP:
-			{
-				coreGame->getPlayer()[0]->setDirection(LEFT);
-				break;
-			}
-			case DOWN:
-			{
-				coreGame->getPlayer()[0]->setDirection(RIGHT);
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
-	}
-	if (right == GLFW_PRESS){
-		switch (coreGame->getPlayer()[0]->getDirection()) {
-			case LEFT:
-			{
-				coreGame->getPlayer()[0]->setDirection(UP);
-				break;
-			}
-			case RIGHT:
-			{
-				coreGame->getPlayer()[0]->setDirection(DOWN);
-				break;
-			}
-			case UP:
-			{
-				coreGame->getPlayer()[0]->setDirection(RIGHT);
-				break;
-			}
-			case DOWN:
-			{
-				coreGame->getPlayer()[0]->setDirection(LEFT);
-				break;
-			}
-			default:
-			{
-				break;
-			}
-		}
-	}
-	if (esc == GLFW_PRESS){
-		exit (1);
-	}
-	if (one == GLFW_PRESS){
-		exit (1);
-	}
-	if (two == GLFW_PRESS){
-		exit (1);
-	}
-	if (three == GLFW_PRESS){
-		exit (1);
-	}
+void processInput(GLFWwindow *window)
+{
+	if(glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		glfwSetWindowShouldClose(window, true);
 }
 
 void gameControl::draw() {
-	glClear(GL_COLOR_BUFFER_BIT);
-	glfwGetFramebufferSize(window, &this->ScreenW, &this->ScreenH);
-	glViewport(0, 0, this->ScreenW, this->ScreenH);
-	glfwSwapBuffers(window);
-	glfwSwapInterval(1);
-	controls();
-	glfwPollEvents();
+	if(!glfwWindowShouldClose(window)) {
+		glClear(GL_COLOR_BUFFER_BIT);
+		processInput(window);
+		glfwGetFramebufferSize(window, &this->ScreenW, &this->ScreenH);
+		glViewport(0, 0, this->ScreenW, this->ScreenH);
+		glfwSwapBuffers(window);
+		glfwSwapInterval(1);
+		glfwPollEvents();
+	}
 }
 
 void gameControl::update() {
