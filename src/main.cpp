@@ -73,8 +73,8 @@ void runGame() {
 		}
 		case 2: {
 			while (game->getState() == 2) {
-			//	game->CheckInput();
-			//	game->MoveHead();
+				game->CheckInput();
+				game->MoveHead();
 				screen(win);
 			}
 		}
