@@ -109,12 +109,15 @@ void display(CoreGame *coreGame) {
 			bottom = (float) boxbottom / screenheight,
 			top = bottom + (float) boxheight / screenheight;
 
-	if (coreGame->getPlayer()[0]->getDirection() == RIGHT)
+	if (coreGame->getPlayer()[0]->getDirection() == RIGHT) {
 		boxleft--;
-	else if (coreGame->getPlayer()[0]->getDirection() == LEFT)
+	}
+	else if (coreGame->getPlayer()[0]->getDirection() == LEFT) {
 		boxleft++;
-	else if (coreGame->getPlayer()[0]->getDirection() == DOWN)
+	}
+	else if (coreGame->getPlayer()[0]->getDirection() == DOWN) {
 		boxbottom--;
+	}
 	else {
 		boxbottom++;
 	}
@@ -130,7 +133,7 @@ void display(CoreGame *coreGame) {
 }
 
 void gameControl::draw() {
-	if (!glfwWindowShouldClose(window)) {
+	if (glfwWindowShouldClose(window) == GLFW_FALSE) {
 		window = glfwGetCurrentContext();
 		processInput(window);
 		display(coreGame);
