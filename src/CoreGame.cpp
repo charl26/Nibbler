@@ -20,20 +20,12 @@ void CoreGame::setWindowHeight(int windowHeight) {
     CoreGame::windowHeight = windowHeight;
 }
 
-const std::list<Food *, std::allocator<Food *>> &CoreGame::getFood() const {
-    return food;
-}
-
 const std::vector<Snake *> &CoreGame::getPlayer() const {
     return player;
 }
 
 void CoreGame::setPlayer(const std::vector<Snake *> &player) {
     CoreGame::player = player;
-}
-
-void CoreGame::setFood(const std::list<Food *, std::allocator<Food *>> &food) {
-    CoreGame::food = food;
 }
 
 CoreGame::CoreGame() {
@@ -46,7 +38,6 @@ void CoreGame::addSnakeSegment(const std::vector<int> &position, bool isHead) {
     Snake *snakeSegment = new Snake(position, isHead, UP);
     if (snakeSegment->isHead()) {
         snakeSegment->setLastP(position);
-        //std::cout << "LAST POS Y: " << snakeSegment->getLastP()[0] << "\nLAST POS X" << snakeSegment->getLastP()[1] << std::endl;
     }
     player.push_back(snakeSegment);
 }
@@ -59,12 +50,10 @@ void CoreGame::SpawnFood() {
 }
 
 std::vector<int> CoreGame::RandomPosition() {
-    int x = std::rand() % CoreGame::getWindowWidth();
-    int y = std::rand() % CoreGame::getWindowHeight();
+    int x = std::rand() % (CoreGame::getWindowWidth() * 20);
+    int y = std::rand() % (CoreGame::getWindowHeight() * 20);
     std::vector<int> v = {x, y};
 
-    std::cout << "Food Random X: " << x << std::endl;
-    std::cout << "Food Random Y: " << y << std::endl;
     return (v);
 }
 
@@ -104,7 +93,7 @@ void CoreGame::MoveLeft() {
         pos[1]-= 25;
         player[0]->setPosition(pos);
         MoveSegments();
-        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
+        
     }
 }
 
@@ -117,7 +106,6 @@ void CoreGame::MoveRight() {
         pos[1]+= 25;
         player[0]->setPosition(pos);
         MoveSegments();
-        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
     }
 }
 
@@ -143,42 +131,34 @@ void CoreGame::MoveDown(){
         pos[0]+= 25;
         player[0]->setPosition(pos);
         MoveSegments();
-        //int i = 1;
-        /*while (i < player.size()) {
-            pos = player[i - 1]->getLastP();
-            player[i]->setPosition(pos);
-
-
-            std::cout << "Player segment " << i << " X: " << player[i]->getPosition()[1] << std::endl;
-            std::cout << "Player segment " << i << " Y: " << player[i]->getPosition()[0] << std::endl;
-            i++;
-        }*/
-        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
     }
 }
 
 
 
 void CoreGame::MoveSegments() {
+void CoreGame::MoveSegments(CoreGame *game) {
     unsigned int i = 1;
     std::vector<int> pos;
-    //std::vector<int> defPos;
-
-   // defPos = player[0]->getLastP();
+    Pos = player[0]->getLastP();
 
     while (i < player.size()) {
         pos = player[i - 1]->getLastP();
         player[i]->setPosition(pos);
 
 
-        //std::cout << "Player segment " << i << " X: " << player[i]->getPosition()[1] << std::endl;
-        //std::cout << "Player segment " << i << " Y: " << player[i]->getPosition()[0] << std::endl;
+           while (i < player.size()) {
+        pos = player[i]->getPosition();
+        if (player[0]->getPosition()[0] == pos[0] && player[0]->getPosition()[1] == pos[1]) {
+            game->setState(3);
+        }
+        player[i]->setPosition(player[i - 1]->getLastP());
+        player[i]->setLastP(pos);
         i++;
     }
 }
 
-void CoreGame::MoveHead() {
-//    unsigned int 	i = 1;
+void CoreGame::MoveHead(CoreGame *game) {
     std::vector<int> pos;
     std::vector<int> foodPos;
 
@@ -193,12 +173,20 @@ void CoreGame::MoveHead() {
     //pos = player[0]->getPosition();
     switch (player[0]->getDirection()) {
         case UP: {
+
             MoveUp();
             MoveSegments();
+            if (player[0]->getPosition()[0] - 20 >= 0) {
+                player[0]->setLastP(player[0]->getPosition());
+                pos[0] -= 20;
+                player[0]->setPosition(pos);
+                MoveSegments(game);
+            }
             break;
         }
 
         case LEFT: {
+
             MoveLeft();
             MoveSegments();
             break;
@@ -216,7 +204,42 @@ void CoreGame::MoveHead() {
         default : {
             MoveUp();
             MoveSegments();
+            if (player[0]->getPosition()[1] - 20 >= 0) {
+                player[0]->setLastP(player[0]->getPosition());
+                pos[1] -= 20;
+                player[0]->setPosition(pos);
+                MoveSegments(game);
+            }
+            break;
+        }
+        case DOWN: {
+            if (player[0]->getPosition()[0] - (windowHeight * 20) - 70 <= windowHeight) {
+                player[0]->setLastP(player[0]->getPosition());
+                pos[0] += 20;
+                player[0]->setPosition(pos);
+                MoveSegments(game);
+            }
+            break;
+        }
+        case RIGHT: {
+            if (player[0]->getPosition()[1] - (windowWidth * 20) - 70 <= windowWidth) {
+                player[0]->setLastP(player[0]->getPosition());
+                pos[1] += 20;
+                player[0]->setPosition(pos);
+                MoveSegments(game);
+            }
+            break;
+        }
+        default: {
+            break;
         }
     }
 }
 
+const std::vector<Food *> &CoreGame::getFood() const {
+    return food;
+}
+
+void CoreGame::setFood(const std::vector<Food *> &food) {
+    CoreGame::food = food;
+}

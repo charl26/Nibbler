@@ -101,9 +101,10 @@ void gameControl::update() {
 
 }
 
-int gameControl::getScreenW() const {return ScreenW;}
+
+int gameControl::getScreenW() {return ScreenW;}
 void gameControl::setScreenW(int ScreenW) {gameControl::ScreenW = ScreenW;}
-int gameControl::getScreenH() const {return ScreenH;}
+int gameControl::getScreenH() {return ScreenH;}
 void gameControl::setScreenH(int ScreenH) {gameControl::ScreenH = ScreenH;}
 
 extern "C" gameControl* create(CoreGame *ref){return new gameControl(ref);}

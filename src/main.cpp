@@ -3,34 +3,16 @@
 #include "../dynamicLibraries/dylib.hpp"
 
 CoreGame *game = new CoreGame();
-
-void lk_debug(std::vector<int> thing) {
-    std::cout << "Y VALUE: " << thing[0] <<"\nX VALUE: " << thing[1] << std::endl;
-}
-
 void genStartingSnake(const std::vector<int> &start) {
 	std::vector<int> pos;
 
 	game->addSnakeSegment(start, true);
 	pos = start;
-    lk_debug(pos);
 	pos[0] += 25;
-
 	while (game->getPlayer().size() < 50) {
 		game->addSnakeSegment(pos, false);
-        lk_debug(pos);
 		pos[0]+= 25;
 	}
-
-    std::cout << "SNAKE LENGTH: " << game->getPlayer().size() << std::endl;
-
-    //std::vector<int> pos;
-
-    /*for (int i = 1; i < 6; i++) {
-        pos = {game->getPlayer()[i - 1]->getLastP()[0] + 1, game->getPlayer()[i - 1]->getLastP()[1]};
-        game->addSnakeSegment(pos, false);
-        pos.clear();
-    }*/
 }
 
 void *startGame() {
@@ -42,8 +24,12 @@ void *startGame() {
 	int GUI;
 	void *handle = NULL;
 	std::cin >> std::ws >> GUI;
-	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
+	std::vector<int> start = {(game->getWindowHeight() * 20) / 2, (game->getWindowWidth() * 20) / 2};
 	genStartingSnake(start);
+	game->SpawnFood();
+	game->SpawnFood();
+	game->SpawnFood();
+	game->SpawnFood();
 	game->SpawnFood();
 	switch (GUI) {
 		case 1: {
@@ -89,17 +75,15 @@ void runGame() {
 		}
 		case 2: {
 			while (game->getState() == 2) {
-				//game->CheckInput();
-				//game->MoveHead();
+				game->MoveHead(game);
 				screen(win);
 			}
 		}
 		case 3: {
-			// TODO: Game over state
+			destroy(win);// TODO: Game over state
 		}
 		default: {
-			destroy(win);
-			game->setState(2); // TODO: Update to 1 - Menu state
+			 // TODO: Update to 1 - Menu state
 		}
 	}
 }
