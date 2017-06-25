@@ -5,8 +5,8 @@
 #ifndef NIBBLER_COREGAME_HPP
 
 # define NIBBLER_COREGAME_HPP
-# define MaxWindow 700
-# define MinWindow 50
+# define MaxWindow 30
+# define MinWindow 20
 
 #include <iostream>
 #include <list>
@@ -24,7 +24,7 @@ private:
 	int 				windowWidth;
 	int 				windowHeight;
 	std::vector<Snake *>player;
-	std::list<Food *>	food;
+	std::vector<Food *>	food;
 	int					state;
 
     CoreGame(const CoreGame &coreGame);
@@ -40,14 +40,14 @@ public:
 	const std::vector<Snake *> &getPlayer() const;
 	void setPlayer(const std::vector<Snake *> &player);
 	void addSnakeSegment(const std::vector<int> &position, bool isHead);
-	const std::list<Food *, std::allocator<Food *>> &getFood() const;
-	void setFood(const std::list<Food *, std::allocator<Food *>> &food);
+	const std::vector<Food *> &getFood() const;
+	void setFood(const std::vector<Food *> &food);
 	void SpawnFood();
 	int getState() const;
 	void setState(int state);
 	void CheckInput();
-	void MoveSegments();
-    void MoveHead();
+	void MoveSegments(CoreGame *game);
+    void MoveHead(CoreGame *game);
     virtual ~CoreGame();
 };
 

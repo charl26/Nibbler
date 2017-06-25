@@ -1,25 +1,29 @@
-NAME		=	SDL2lib.so
-SRC         =   SDL2lib.cpp ../../src/CoreGame.cpp ../../src/snake.cpp
-OBJ         =   SDL2lib.o CoreGame.o snake.o
+NAME = SDL2lib.so
 
-CC          =   clang++
-CPPFLAGS    =   -fPIC -c -Wall -Wextra -std=gnu++11
-LDFLAGS     =   -shared -std=gnu++11
-RM          =   rm -rf
+SRC = SDL2lib.cpp
+OBJ = SDL2lib.o
+CC = clang++
+
+DLCFLAG  = -L ~/.brew/lib/ -lSDL2 -lSDL2_image -lSDL2_ttf
+DLCFLAG += -framework OpenGL -framework Cocoa
+DLCFLAG += -Wl,-rpath,~/.brew/lib/
+CFLAG += -fPIC -c -Wall -Wextra -std=gnu++11
 
 all: $(NAME)
 
 $(NAME):
-	$(CC) $(SRC) $(CPPFLAGS)
-	$(CC) $(OBJ) $(LDFLAGS) -o $(NAME) -I./../../graphicsLibraries/SDL2/include -framework OpenGL `sdl2-config --cflags --libs`
+	@$(CC) $(SRC) $(CFLAG) -I~/.brew/include/SDL2/ -D_THREAD_SAFE
+	@echo "object file created"
+	@$(CC) $(OBJ) -fPIC -undefined dynamic_lookup -shared -o $(NAME) $(DLCFLAG) -g $(shell sdl2-config --cflags)
+	@echo "compile shared lib"
 	@rm -f $(OBJ)
 
-
 clean:
-	$(RM) $(OBJ)
+	@rm -f $(OBJ)
+	@echo "clean complete"
 
 fclean: clean
-	$(RM) $(NAME)
+	@rm -f $(NAME)
+	@echo "everything is now gone"
 
-re: fclean
-	$(MAKE) all
+re: fclean all
