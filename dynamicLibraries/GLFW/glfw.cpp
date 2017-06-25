@@ -33,8 +33,9 @@ gameControl::~gameControl() {
 }
 
 void gameControl::processInput(GLFWwindow *window) {
-	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS) {
 		switch (coreGame->getPlayer()[0]->getDirection()) {
 			case LEFT: {
@@ -81,12 +82,15 @@ void gameControl::processInput(GLFWwindow *window) {
 			}
 		}
 	}
-	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS)
+	}
+	if (glfwGetKey(window, GLFW_KEY_2) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
-	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS)
+	}
+	if (glfwGetKey(window, GLFW_KEY_3) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
 }
 
 void display(CoreGame *coreGame) {
