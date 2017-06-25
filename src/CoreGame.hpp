@@ -5,8 +5,9 @@
 #ifndef NIBBLER_COREGAME_HPP
 
 # define NIBBLER_COREGAME_HPP
-# define MaxWindow 30
-# define MinWindow 20
+# define MaxWindow 1200
+# define MinWindow 50
+
 
 #include <iostream>
 #include <list>

@@ -39,6 +39,7 @@ void gameControl::update() {
 
 }
 
+
 int gameControl::getScreenW() {return ScreenW;}
 void gameControl::setScreenW(int ScreenW) {gameControl::ScreenW = ScreenW;}
 int gameControl::getScreenH() {return ScreenH;}

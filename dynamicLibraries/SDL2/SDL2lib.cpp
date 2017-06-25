@@ -96,6 +96,7 @@ void gameControl::Exit() {
     coreGame->setState(3);
 }
 
+
 void gameControl::CheckInput() {
     SDL_Event e;
 
@@ -104,23 +105,27 @@ void gameControl::CheckInput() {
             case SDL_KEYUP: {
                 switch (e.key.keysym.sym) {
                     case SDLK_UP: {
-                        if (coreGame->getPlayer()[0]->getDirection() != DOWN)
+                        if (coreGame->getPlayer()[0]->getDirection() != DOWN) {
                             coreGame->getPlayer()[0]->setDirection(UP);
+                        }
                         break;
                     }
                     case SDLK_LEFT: {
-                        if (coreGame->getPlayer()[0]->getDirection() != RIGHT)
+                        if (coreGame->getPlayer()[0]->getDirection() != RIGHT) {
                             coreGame->getPlayer()[0]->setDirection(LEFT);
+                        }
                         break;
                     }
                     case SDLK_DOWN: {
-                        if (coreGame->getPlayer()[0]->getDirection() != UP)
+                        if (coreGame->getPlayer()[0]->getDirection() != UP) {
                             coreGame->getPlayer()[0]->setDirection(DOWN);
+                        }
                         break;
                     }
                     case SDLK_RIGHT: {
-                        if (coreGame->getPlayer()[0]->getDirection() != LEFT)
+                        if (coreGame->getPlayer()[0]->getDirection() != LEFT) {
                             coreGame->getPlayer()[0]->setDirection(RIGHT);
+                        }
                         break;
                     }
                     case SDLK_ESCAPE: {
@@ -137,7 +142,6 @@ void gameControl::CheckInput() {
         }
     }
 }
-
 void gameControl::update() {}
 int gameControl::getScreenW() { return ScreenW; }
 void gameControl::setScreenW(int ScreenW) { gameControl::ScreenW = ScreenW; }
