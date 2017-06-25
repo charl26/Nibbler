@@ -25,6 +25,10 @@ public:
 	int getScreenH();
 	void setScreenH(int ScreenH);
 	void processInput(GLFWwindow *window);
+	CoreGame *getCoreGame() const;
+	void setCoreGame(CoreGame *coreGame);
+	void CheckInput();
+	void Exit();
 };
 
 typedef gameControl* create_t(CoreGame *ref);
