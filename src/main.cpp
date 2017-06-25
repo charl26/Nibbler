@@ -9,11 +9,11 @@ void genStartingSnake(const std::vector<int> &start) {
 
 	game->addSnakeSegment(start, true);
 	pos = start;
-	pos[0]++;
+	pos[0] += 20;
 
 	while (game->getPlayer().size() < 5) {
 		game->addSnakeSegment(pos, false);
-		pos[0]++;
+		pos[0] += 20;
 	}
 }
 
@@ -26,8 +26,12 @@ void *startGame() {
 	int GUI;
 	void *handle = NULL;
 	std::cin >> std::ws >> GUI;
-	std::vector<int> start = {game->getWindowHeight() / 2, game->getWindowWidth() / 2};
+	std::vector<int> start = {(game->getWindowHeight() * 20) / 2, (game->getWindowWidth() * 20) / 2};
 	genStartingSnake(start);
+	game->SpawnFood();
+	game->SpawnFood();
+	game->SpawnFood();
+	game->SpawnFood();
 	game->SpawnFood();
 	switch (GUI) {
 		case 1: {
@@ -73,17 +77,15 @@ void runGame() {
 		}
 		case 2: {
 			while (game->getState() == 2) {
-				game->CheckInput();
-				game->MoveHead();
+				game->MoveHead(game);
 				screen(win);
 			}
 		}
 		case 3: {
-			// TODO: Game over state
+			destroy(win);// TODO: Game over state
 		}
 		default: {
-			destroy(win);
-			game->setState(2); // TODO: Update to 1 - Menu state
+			 // TODO: Update to 1 - Menu state
 		}
 	}
 }

@@ -19,10 +19,14 @@ public:
 	void    update();
 	virtual ~gameControl();
 
-	int getScreenW() const;
+	int getScreenW();
 	void setScreenW(int ScreenW);
-	int getScreenH() const;
+	int getScreenH();
 	void setScreenH(int ScreenH);
+	CoreGame *getCoreGame() const;
+	void setCoreGame(CoreGame *coreGame);
+	void CheckInput();
+	void Exit();
 };
 
 typedef gameControl* create_t(CoreGame *ref);
