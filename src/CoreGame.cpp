@@ -44,6 +44,10 @@ CoreGame::CoreGame() {
 
 void CoreGame::addSnakeSegment(const std::vector<int> &position, bool isHead) {
     Snake *snakeSegment = new Snake(position, isHead, UP);
+    if (snakeSegment->isHead()) {
+        snakeSegment->setLastP(position);
+        //std::cout << "LAST POS Y: " << snakeSegment->getLastP()[0] << "\nLAST POS X" << snakeSegment->getLastP()[1] << std::endl;
+    }
     player.push_back(snakeSegment);
 }
 
@@ -91,59 +95,84 @@ void CoreGame::CheckInput() {
 
 }
 
+void CoreGame::MoveLeft() {
+    std::vector<int>    pos;
+
+    pos = player[0]->getPosition();
+    if (player[0]->getDirection() != RIGHT) {
+        player[0]->setDirection(LEFT);
+        pos[1]-= 25;
+        player[0]->setPosition(pos);
+        MoveSegments();
+        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
+    }
+}
+
+void CoreGame::MoveRight() {
+    std::vector<int>    pos;
+
+    pos = player[0]->getPosition();
+    if (player[0]->getDirection() != LEFT) {
+        player[0]->setDirection(RIGHT);
+        pos[1]+= 25;
+        player[0]->setPosition(pos);
+        MoveSegments();
+        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
+    }
+}
+
+void CoreGame::MoveUp() {
+    std::vector<int>    pos;
+
+    pos = player[0]->getPosition();
+    if (player[0]->getDirection() != DOWN) {
+        player[0]->setDirection(UP);
+        pos[0]-= 25;
+        player[0]->setPosition(pos);
+        MoveSegments();
+        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
+    }
+}
+
+void CoreGame::MoveDown(){
+    std::vector<int>    pos;
+
+    pos = player[0]->getPosition();
+    if (player[0]->getDirection() != UP) {
+        player[0]->setDirection(DOWN);
+        pos[0]+= 25;
+        player[0]->setPosition(pos);
+        MoveSegments();
+        //int i = 1;
+        /*while (i < player.size()) {
+            pos = player[i - 1]->getLastP();
+            player[i]->setPosition(pos);
+
+
+            std::cout << "Player segment " << i << " X: " << player[i]->getPosition()[1] << std::endl;
+            std::cout << "Player segment " << i << " Y: " << player[i]->getPosition()[0] << std::endl;
+            i++;
+        }*/
+        //std::cout << "LAST POS Y: " << player[0]->getLastP()[0] << "\nLAST POS X" << player[0]->getLastP()[1] << std::endl;
+    }
+}
+
+
+
 void CoreGame::MoveSegments() {
     unsigned int i = 1;
     std::vector<int> pos;
+    //std::vector<int> defPos;
 
-    std::cout << std::endl;
+   // defPos = player[0]->getLastP();
 
     while (i < player.size()) {
-        pos = player[i]->getPosition();
+        pos = player[i - 1]->getLastP();
+        player[i]->setPosition(pos);
 
-        switch (player[i]->getDirection()) {
-            case UP: {
-                std::cout << "UP\n";
-                player[i]->setPosition(player[i - 1]->getLastP());
-                player[i]->setLastP(pos);
-                std::cout << "PLAYER[" << i << "] last position X = " << player[i]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << i << "] last position Y = " << player[i]->getLastP()[0] << std::endl;
-                pos[0]--;
-                break;
-            }
-            case LEFT: {
-                std::cout << "LEFT\n";
-                player[i]->setPosition(player[i - 1]->getLastP());
-                player[i]->setLastP(pos);
-                std::cout << "PLAYER[" << i << "] last position X = " << player[i]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << i << "] last position Y = " << player[i]->getLastP()[0] << std::endl;
-                pos[1]--;
-                break;
-            }
-            case DOWN: {
-                std::cout << "DOWN\n";
-                player[i]->setPosition(player[i - 1]->getLastP());
-                player[i]->setLastP(pos);
-                std::cout << "PLAYER[" << i << "] last position X = " << player[i]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << i << "] last position Y = " << player[i]->getLastP()[0] << std::endl;
-                pos[0]++;
-                break;
-            }
-            case RIGHT: {
-                std::cout << "RIGHT\n";
-                player[i]->setPosition(player[i - 1]->getLastP());
-                player[i]->setLastP(pos);
-                std::cout << "PLAYER[" << i << "] last position X = " << player[i]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << i << "] last position Y = " << player[i]->getLastP()[0] << std::endl;
-                pos[1]++;
-                break;
-            }
-            default: {
-                player[i]->setDirection(UP);
-                break;
-            }
-        }
-        std::cout << "Player segment " << i << " X: " << player[i]->getPosition()[1] << std::endl;
-        std::cout << "Player segment " << i << " Y: " << player[i]->getPosition()[0] << std::endl;
+
+        //std::cout << "Player segment " << i << " X: " << player[i]->getPosition()[1] << std::endl;
+        //std::cout << "Player segment " << i << " Y: " << player[i]->getPosition()[0] << std::endl;
         i++;
     }
 }
@@ -151,64 +180,43 @@ void CoreGame::MoveSegments() {
 void CoreGame::MoveHead() {
 //    unsigned int 	i = 1;
     std::vector<int> pos;
+    std::vector<int> foodPos;
 
-    pos = player[0]->getPosition();
+    //player[0]->setLastP(player[0]->getPosition());
+    SpawnFood();
+
+    std::list<Food *, std::allocator<Food *>> food = CoreGame::getFood();
+
+    //pos = {player[0]->getPosition()[0], player[0]->getPosition()[1]};
+
+    //addSnakeSegment(pos, false);
+    //pos = player[0]->getPosition();
     switch (player[0]->getDirection()) {
         case UP: {
-            if (player[0]->getPosition()[0] > 0) {
-                player[0]->setLastP(player[0]->getPosition());
-                pos[0]--;
-                player[0]->setPosition(pos);
-                std::cout << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position X = " << player[0]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position Y = " << player[0]->getLastP()[0] << std::endl;
-                std::cout << "Player segment " << 0 << " X: " << player[0]->getPosition()[1] << std::endl;
-                std::cout << "Player segment " << 0 << " Y: " << player[0]->getPosition()[0] << std::endl;
-                MoveSegments();
-            }
+            MoveUp();
+            MoveSegments();
             break;
         }
+
         case LEFT: {
-            if (player[0]->getPosition()[1] > 0) {
-                player[0]->setLastP(player[0]->getPosition());
-                pos[1]--;
-                player[0]->setPosition(pos);
-                std::cout << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position X = " << player[0]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position Y = " << player[0]->getLastP()[0] << std::endl;
-                std::cout << "Player segment " << 0 << " X: " << player[0]->getPosition()[1] << std::endl;
-                std::cout << "Player segment " << 0 << " Y: " << player[0]->getPosition()[0] << std::endl;
-                MoveSegments();
-            }
+            MoveLeft();
+            MoveSegments();
             break;
         }
         case DOWN: {
-            if (player[0]->getPosition()[0] < windowHeight) {
-                player[0]->setLastP(player[0]->getPosition());
-                pos[0]++;
-                player[0]->setPosition(pos);
-                std::cout << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position X = " << player[0]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position Y = " << player[0]->getLastP()[0] << std::endl;
-                std::cout << "Player segment " << 0 << " X: " << player[0]->getPosition()[1] << std::endl;
-                std::cout << "Player segment " << 0 << " Y: " << player[0]->getPosition()[0] << std::endl;
-                MoveSegments();
-            }
+            MoveDown();
+            MoveSegments();
             break;
         }
         case RIGHT: {
-            if (player[0]->getPosition()[1] < windowWidth) {
-                player[0]->setLastP(player[0]->getPosition());
-                pos[1]++;
-                player[0]->setPosition(pos);
-                std::cout << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position X = " << player[0]->getLastP()[1] << std::endl;
-                std::cout << "PLAYER[" << 0 << "] last position Y = " << player[0]->getLastP()[0] << std::endl;
-                std::cout << "Player segment " << 0 << " X: " << player[0]->getPosition()[1] << std::endl;
-                std::cout << "Player segment " << 0 << " Y: " << player[0]->getPosition()[0] << std::endl;
-                MoveSegments();
-            }
+            MoveRight();
+            MoveSegments();
             break;
+        }
+        default : {
+            MoveUp();
+            MoveSegments();
         }
     }
 }
+

@@ -48,6 +48,10 @@ public:
 	void CheckInput();
 	void MoveSegments();
     void MoveHead();
+    void MoveLeft();
+    void MoveRight();
+    void MoveUp();
+    void MoveDown();
     virtual ~CoreGame();
 };
 

@@ -4,17 +4,33 @@
 
 CoreGame *game = new CoreGame();
 
+void lk_debug(std::vector<int> thing) {
+    std::cout << "Y VALUE: " << thing[0] <<"\nX VALUE: " << thing[1] << std::endl;
+}
+
 void genStartingSnake(const std::vector<int> &start) {
 	std::vector<int> pos;
 
 	game->addSnakeSegment(start, true);
 	pos = start;
-	pos[0]++;
+    lk_debug(pos);
+	pos[0] += 25;
 
-	while (game->getPlayer().size() < 5) {
+	while (game->getPlayer().size() < 50) {
 		game->addSnakeSegment(pos, false);
-		pos[0]++;
+        lk_debug(pos);
+		pos[0]+= 25;
 	}
+
+    std::cout << "SNAKE LENGTH: " << game->getPlayer().size() << std::endl;
+
+    //std::vector<int> pos;
+
+    /*for (int i = 1; i < 6; i++) {
+        pos = {game->getPlayer()[i - 1]->getLastP()[0] + 1, game->getPlayer()[i - 1]->getLastP()[1]};
+        game->addSnakeSegment(pos, false);
+        pos.clear();
+    }*/
 }
 
 void *startGame() {
@@ -73,8 +89,8 @@ void runGame() {
 		}
 		case 2: {
 			while (game->getState() == 2) {
-				game->CheckInput();
-				game->MoveHead();
+				//game->CheckInput();
+				//game->MoveHead();
 				screen(win);
 			}
 		}
