@@ -3,17 +3,15 @@
 #include "../dynamicLibraries/dylib.hpp"
 
 CoreGame *game = new CoreGame();
-
 void genStartingSnake(const std::vector<int> &start) {
 	std::vector<int> pos;
 
 	game->addSnakeSegment(start, true);
 	pos = start;
-	pos[0] += 20;
-
-	while (game->getPlayer().size() < 5) {
+	pos[0] += 25;
+	while (game->getPlayer().size() < 50) {
 		game->addSnakeSegment(pos, false);
-		pos[0] += 20;
+		pos[0]+= 25;
 	}
 }
 

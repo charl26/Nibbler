@@ -47,6 +47,12 @@ public:
 	int getState() const;
 	void setState(int state);
 	void CheckInput();
+	void MoveSegments();
+    void MoveHead();
+    void MoveLeft();
+    void MoveRight();
+    void MoveUp();
+    void MoveDown();
 	void MoveSegments(CoreGame *game);
     void MoveHead(CoreGame *game);
     virtual ~CoreGame();
